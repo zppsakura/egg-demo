@@ -26,26 +26,26 @@ module.exports = appInfo => {
   config.security = {
     // 关闭csrf验证
     csrf: {
-        enable: false,
-        ignoreJSON: true,
+      enable: false,
+      ignoreJSON: true,
     },
     // 白名单
-    domainWhiteList: ['*']
+    domainWhiteList: [ '*' ],
   };
 
   config.cors = {
     origin: '*',
     allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS',
-    credentials: true, 
+    credentials: true,
   };
-  
+
   config.mongoose = {
     client: {
-      url: '',
+      url: 'mongodb+srv://zhoupan:zpp133125@cluster0-v7sxz.azure.mongodb.net/egg?authSource=admin&replicaSet=Cluster0-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true',
       options: {},
       plugins: [],
     },
-  }
+  };
 
   return {
     ...config,

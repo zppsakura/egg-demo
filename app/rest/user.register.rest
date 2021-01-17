@@ -5,6 +5,6 @@ content-type: application/json
     "name":"zpp",
     "age": 18,
     "phone": 18652953991,
-    "password":"123321",
+    "password":"12332",
     "password_check":"123321"
 }
