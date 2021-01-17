@@ -1,0 +1,10 @@
+POST http://127.0.0.1:7001/register HTTP/1.1
+content-type: application/json
+
+{
+    "name":"zpp",
+    "age": 18,
+    "phone": 18652953991,
+    "password":"123321",
+    "password_check":"123321"
+}
