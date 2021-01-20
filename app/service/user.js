@@ -15,6 +15,7 @@ class UserService extends Service {
       ...user,
       password: utility.md5(user.password),
     };
+    this.ctx.cookies.set('username', 'aaa');
     return this.ctx.model.User.create(user2);
   }
 

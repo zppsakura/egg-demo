@@ -34,9 +34,9 @@ module.exports = appInfo => {
   };
 
   config.cors = {
-    origin: '*',
+    origin: 'http://localhost:8002',
     allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS',
-    credentials: true,
+    credentials: 'include',
   };
 
   config.mongoose = {
