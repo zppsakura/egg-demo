@@ -10,8 +10,7 @@ class UserController extends Controller {
     const { ctx, service } = this;
     const createRule = {
       name: { type: 'string' },
-      age: { type: 'number' },
-      phone: { type: 'number' },
+      phone: { type: 'string' },
       password: { type: 'string' },
       password_check: { type: 'string' },
     };
