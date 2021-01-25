@@ -3,8 +3,8 @@ content-type: application/json
 
 {
     "name":"zpp",
-    "age": 18,
-    "phone": 18652953991,
-    "password":"12332",
+    "age": "18",
+    "phone": "18652953990",
+    "password":"123321",
     "password_check":"123321"
 }

@@ -20,52 +20,71 @@ class UserController extends Controller {
     // 调用 Service 进行业务处理
     const res = await service.user.register(Object.assign(ctx.request.body));
     // 设置响应内容和响应状态码
-    if (res) {
-      ctx.body = {
-        data: res,
-        code: JsonCode.SUCCESS,
-        msg: '注册成功',
-      };
-    } else {
-      ctx.body = {
-        data: res,
-        code: JsonCode.ERROR,
-        msg: '两次密码不一致',
-      };
+    switch (res) {
+      case JsonCode.PASSWORD_SAME:
+        ctx.body = {
+          code: res,
+          msg: '两次密码不一致',
+        };
+        break;
+      case JsonCode.USERNAME_ISHAS:
+        ctx.body = {
+          code: res,
+          msg: '该用户已注册过',
+        };
+        break;
+      case JsonCode.SUCCESS:
+        ctx.body = {
+          code: res,
+          msg: '注册成功',
+        };
+        break;
+      default:
+        break;
     }
     ctx.status = 200;
-
   }
 
   async login() {
     const { ctx, service } = this;
     // 调用 Service 进行业务处理
     const res = await service.user.login(ctx.request.body);
-    if (res === JsonCode.SUCCESS) {
+    if (res.code === JsonCode.SUCCESS) {
       ctx.body = {
-        code: res,
+        code: res.code,
+        data: res.data,
         msg: '登录成功',
       };
       ctx.session.user = ctx.request.body;
+    } else if (res.code === JsonCode.DATA_NOT_FOUND) {
+      ctx.body = {
+        code: res.code,
+        msg: '该用户未注册，请前去注册',
+      };
     } else {
       ctx.body = {
-        code: res,
+        code: res.code,
         msg: '密码不正确',
       };
     }
   }
 
-  async info() {
-    const { ctx } = this;
-    console.log(ctx.session);
+  async list() {
+    const { ctx, service } = this;
     if (ctx.session.user) {
-      ctx.body = {
-        data: 'ABC',
-        code: JsonCode.SUCCESS,
+      const createRule = {
+        todoList: { type: 'string' },
       };
+        // 校验参数
+      ctx.validate(createRule);
+      // 组装参数
+      // 调用 Service 进行业务处理
+      const res = await service.user.getLists(Object.assign(ctx.request.body));
+      // 设置响应内容和响应状态码
+      console.log('res', res);
     } else {
       ctx.body = {
-        data: null,
+        msg: '你还没登录，请先去登录！',
         code: JsonCode.ERROR,
       };
     }

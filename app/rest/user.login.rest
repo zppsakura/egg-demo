@@ -3,5 +3,6 @@ content-type: application/json
 
 {
     "name":"zpp",
+    "phone": "18652953990",
     "password":"123321"
 }

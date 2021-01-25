@@ -9,28 +9,58 @@ class UserService extends Service {
   async register(user) {
     if (user.password !== user.password_check) {
       console.log('两次密码不一样');
-      return null;
+      return JsonCode.PASSWORD_SAME;
     }
     const user2 = {
       ...user,
       password: utility.md5(user.password),
     };
-    this.ctx.cookies.set('username', 'aaa');
-    return this.ctx.model.User.create(user2);
+    const phone = await this.ctx.model.User.findOne({ phone: user.phone }).exec();
+    if (!phone) {
+      this.ctx.model.User.create(user2);
+      return JsonCode.SUCCESS;
+    }
+    return JsonCode.USERNAME_ISHAS;
   }
 
   async login(user) {
-    const nameInfo = await this.ctx.model.User.findOne({ name: user.name }).exec();
+    const nameInfo = await this.ctx.model.User.findOne({ phone: user.phone }).exec();
     if (!nameInfo) {
-      return JsonCode.DATA_NOT_FOUND;
+      const data = {
+        code: JsonCode.DATA_NOT_FOUND,
+      };
+      return data;
     }
     const passwordInfo = await this.ctx.model.User.findOne({ name: user.name, password: utility.md5(user.password) }).exec();
     if (!passwordInfo) {
-      return JsonCode.PASSWORD_ERROR;
+      const data = {
+        code: JsonCode.PASSWORD_ERROR,
+      };
+      return data;
     }
-    return JsonCode.SUCCESS;
-
+    const data = {
+      code: JsonCode.SUCCESS,
+      data: {
+        name: user.name,
+        phone: user.phone,
+      },
+    };
+    return data;
   }
+
+  // 获取代办信息列表
+  async getLists(params) {
+    const user = {
+      ...params,
+    };
+    const phone = await this.ctx.model.User.findOne({ phone: user.phone }).exec();
+    if (!phone) {
+      this.ctx.model.User.create(user);
+      return JsonCode.SUCCESS;
+    }
+    return JsonCode.USERNAME_ISHAS;
+  }
+
 }
 
 module.exports = UserService;
