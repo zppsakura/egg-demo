@@ -48,19 +48,6 @@ class UserService extends Service {
     return data;
   }
 
-  // 获取代办信息列表
-  async getLists(params) {
-    const user = {
-      ...params,
-    };
-    const phone = await this.ctx.model.User.findOne({ phone: user.phone }).exec();
-    if (!phone) {
-      this.ctx.model.User.create(user);
-      return JsonCode.SUCCESS;
-    }
-    return JsonCode.USERNAME_ISHAS;
-  }
-
 }
 
 module.exports = UserService;

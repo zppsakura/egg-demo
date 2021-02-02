@@ -56,6 +56,7 @@ class UserController extends Controller {
         msg: '登录成功',
       };
       ctx.session.user = ctx.request.body;
+      console.log('login', ctx.session.user);
     } else if (res.code === JsonCode.DATA_NOT_FOUND) {
       ctx.body = {
         code: res.code,
@@ -65,27 +66,6 @@ class UserController extends Controller {
       ctx.body = {
         code: res.code,
         msg: '密码不正确',
-      };
-    }
-  }
-
-  async list() {
-    const { ctx, service } = this;
-    if (ctx.session.user) {
-      const createRule = {
-        todoList: { type: 'string' },
-      };
-        // 校验参数
-      ctx.validate(createRule);
-      // 组装参数
-      // 调用 Service 进行业务处理
-      const res = await service.user.getLists(Object.assign(ctx.request.body));
-      // 设置响应内容和响应状态码
-      console.log('res', res);
-    } else {
-      ctx.body = {
-        msg: '你还没登录，请先去登录！',
-        code: JsonCode.ERROR,
       };
     }
   }

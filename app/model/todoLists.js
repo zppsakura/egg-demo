@@ -8,5 +8,4 @@ module.exports = app => {
   });
 
   return mongoose.model('TodoLists', TodoListsSchema);
-}
-;
+};
