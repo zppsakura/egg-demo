@@ -13,6 +13,22 @@ class TodoListsService extends Service {
     };
     return data;
   }
+  async listAdd(info) {
+    const todoList = await this.ctx.model.TodoLists.findOne({ title: info.title }).exec();
+    if (todoList) {
+      const data = {
+        code: JsonCode.DATA_IS_FOUND,
+        msg: '该条信息已存在，请勿重复添加！',
+      };
+      return data;
+    }
+    await this.ctx.model.TodoLists.create({ title: info.title });
+    const data = {
+      code: JsonCode.SUCCESS,
+      msg: '列表添加成功',
+    };
+    return data;
+  }
   async listDelete(info) {
     const todoList = await this.ctx.model.TodoLists.findOne({ title: info.title }).exec();
     if (!todoList) {

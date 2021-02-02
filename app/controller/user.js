@@ -56,7 +56,6 @@ class UserController extends Controller {
         msg: '登录成功',
       };
       ctx.session.user = ctx.request.body;
-      console.log('login', ctx.session.user);
     } else if (res.code === JsonCode.DATA_NOT_FOUND) {
       ctx.body = {
         code: res.code,

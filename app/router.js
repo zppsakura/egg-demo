@@ -9,4 +9,5 @@ module.exports = app => {
   router.post('/login', controller.user.login);
   router.get('/getLists', controller.todoLists.getLists);
   router.get('/listDelete', controller.todoLists.listDelete);
+  router.get('/listAdd', controller.todoLists.listAdd);
 };

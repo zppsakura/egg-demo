@@ -8,7 +8,6 @@ const JsonCode = require('../constant/JsonCode.js');
 class UserService extends Service {
   async register(user) {
     if (user.password !== user.password_check) {
-      console.log('两次密码不一样');
       return JsonCode.PASSWORD_SAME;
     }
     const user2 = {
