@@ -39,6 +39,13 @@ module.exports = appInfo => {
     credentials: 'include',
   };
 
+  config.cluster = {
+    listen: {
+      port: 7002,
+      hostname: '127.0.0.1',
+    },
+  };
+
   config.mongoose = {
     client: {
       url: 'mongodb+srv://zhoupan:zpp133125@cluster0-v7sxz.azure.mongodb.net/egg?authSource=admin&replicaSet=Cluster0-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true',

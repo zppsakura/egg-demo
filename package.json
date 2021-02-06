@@ -12,7 +12,8 @@
     "egg-mongoose": "^3.3.1",
     "egg-scripts": "^2.11.0",
     "egg-security": "^2.8.0",
-    "egg-validate": "^2.0.2"
+    "egg-validate": "^2.0.2",
+    "jsonwebtoken": "^8.5.1"
   },
   "devDependencies": {
     "autod": "^3.0.1",
@@ -21,7 +22,8 @@
     "egg-ci": "^1.11.0",
     "egg-mock": "^3.21.0",
     "eslint": "^5.13.0",
-    "eslint-config-egg": "^7.1.0"
+    "eslint-config-egg": "^7.1.0",
+    "jsonwebtoken": "^8.5.1"
   },
   "engines": {
     "node": ">=10.0.0"

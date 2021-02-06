@@ -2,6 +2,7 @@
 
 const Service = require('egg').Service;
 const utility = require('utility');
+const jwt = require('jsonwebtoken');
 const JsonCode = require('../constant/JsonCode.js');
 
 
@@ -37,12 +38,14 @@ class UserService extends Service {
       };
       return data;
     }
+    const token = jwt.sign({
+      name: user.name,
+      id: user._id,
+    }, 'my_token', { expiresIn: '2h' });
     const data = {
       code: JsonCode.SUCCESS,
-      data: {
-        name: user.name,
-        phone: user.phone,
-      },
+      data: token,
+      msg: '登录成功',
     };
     return data;
   }
