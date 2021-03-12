@@ -54,29 +54,44 @@ class TodoListsController extends Controller {
     }
     ctx.status = 200;
   }
-  async listDelete() {
+  async listEdit() {
     const { ctx, service } = this;
     // 调用 Service 进行业务处理
-    const res = await service.todoLists.listDelete(ctx.query);
+    const id = ctx.params.id;
+    const res = await service.todoLists.listEdit(ctx.request.body, id);
     // 设置响应内容和响应状态码
     switch (res.code) {
       case JsonCode.SUCCESS:
         ctx.body = {
           code: res.code,
-          data: res.data,
           msg: res.msg,
         };
         break;
-      case JsonCode.DATA_NOT_FOUND:
+      case JsonCode.ERROR:
         ctx.body = {
           code: res.code,
           msg: res.msg,
         };
         break;
       default:
+        break;
+    }
+    ctx.status = 200;
+  }
+  async listDelete() {
+    const { ctx, service } = this;
+    // 调用 Service 进行业务处理
+    const id = ctx.params.id;
+    const res = await service.todoLists.listDelete(id);
+    // 设置响应内容和响应状态码
+    switch (res.code) {
+      case JsonCode.SUCCESS:
         ctx.body = {
-          msg: '列表删除失败',
+          code: res.code,
+          msg: res.msg,
         };
+        break;
+      default:
         break;
     }
     ctx.status = 200;

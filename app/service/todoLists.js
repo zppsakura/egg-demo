@@ -13,6 +13,7 @@ class TodoListsService extends Service {
     };
     return data;
   }
+
   async listAdd(info) {
     const todoList = await this.ctx.model.TodoLists.findOne({ title: info.title }).exec();
     if (todoList) {
@@ -29,16 +30,39 @@ class TodoListsService extends Service {
     };
     return data;
   }
-  async listDelete(info) {
-    const todoList = await this.ctx.model.TodoLists.findOne({ title: info.title }).exec();
-    if (!todoList) {
-      const data = {
-        code: JsonCode.DATA_NOT_FOUND,
-        msg: '该条信息不存在，无法删除',
-      };
-      return data;
+
+  async listEdit(info, id) {
+    console.log('service info', info);
+    const data = {
+      code: JsonCode.ERROR,
+      msg: '参数不得为空',
+    };
+    if (info.title) {
+      const res = await this.ctx.model.TodoLists.findByIdAndUpdate(id, { title: info.title }, function(err, ret) {
+        if (err) {
+          console.log('更新失败');
+        }
+        return ret;
+      }).exec();
+      if (res._id) {
+        data.code = JsonCode.SUCCESS;
+        data.msg = '更新成功';
+      } else {
+        data.code = JsonCode.ERROR;
+        data.msg = '更新失败';
+      }
     }
-    await this.ctx.model.TodoLists.remove({ title: info.title }).exec();
+    return data;
+  }
+
+  async listDelete(id) {
+    await this.ctx.model.TodoLists.findByIdAndDelete(id, function(err, docs) {
+      if (err) {
+        console.log(err);
+      } else {
+        return docs;
+      }
+    });
     const data = {
       code: JsonCode.SUCCESS,
       msg: '列表删除成功',
